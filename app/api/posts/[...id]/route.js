@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
 
 export async function POST(request, {params}){
-    const url = params.id;
+    const url = params.id[0];
+    const action = params.id[1];
+    const apikey = params.id[2];
+
     const{post,post_meta,post_thumbnail,taxonomies} = await request.json();
     const ID = post.ID;
     const post_author = post.post_author;
@@ -32,7 +35,7 @@ export async function POST(request, {params}){
     //Send Data To Another Web
     if(post_title != "Auto Draft"){
         const sendData = async() => {
-            await fetch("https://ujicoba2.polressemarangkab.com/?wpwhpro_action=main_8829&wpwhpro_api_key=r79cwjl1up40xxc45qrdjonbuzuletgz38bgpqgdkpw5yvx1jkfbquzsnehrbcro&action=create_post",{
+            await fetch("https://ujicoba2.polressemarangkab.com/?wpwhpro_action="+`${action}`+"&wpwhpro_api_key="+`${apikey}`+"&action=create_post",{
             // await fetch("https://webhook.site/27d6ef8d-6b16-4698-a33e-cf7b4b64b38a",{
                 method: "POST",
                 headers: {
@@ -44,5 +47,5 @@ export async function POST(request, {params}){
         await sendData(); 
     }
     //Response
-    return NextResponse.json({message: "Data Terkirim!",post_permalink},{status:201}); 
+    return NextResponse.json({message: "Data Terkirim!",post_permalink,action,apikey},{status:201}); 
 }
