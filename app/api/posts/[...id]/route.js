@@ -35,7 +35,7 @@ export async function POST(request, {params}){
     //Send Data To Another Web
     if(post_title != "Auto Draft"){
         const sendData = async() => {
-            await fetch(`${url}`+"/?wpwhpro_action="+`${action}`+"&wpwhpro_api_key="+`${apikey}`+"&action=create_post",{
+            await fetch("https://"+`${url}`+"/?wpwhpro_action="+`${action}`+"&wpwhpro_api_key="+`${apikey}`+"&action=create_post",{
             // await fetch("https://webhook.site/27d6ef8d-6b16-4698-a33e-cf7b4b64b38a",{
                 method: "POST",
                 headers: {
