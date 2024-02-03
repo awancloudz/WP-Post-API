@@ -33,19 +33,17 @@ export async function POST(request, {params}){
     const post_permalink = "https:\/\/"+`${url}`+"\/?p="+`${ID}`;
 
     //Send Data To Another Web
-    if(post_title != "Auto Draft"){
-        const sendData = async() => {
-            await fetch("https://"+`${url}`+"/?wpwhpro_action="+`${action}`+"&wpwhpro_api_key="+`${apikey}`+"&action=create_post",{
-            // await fetch("https://webhook.site/27d6ef8d-6b16-4698-a33e-cf7b4b64b38a",{
-                method: "POST",
-                headers: {
-                    "Content-type": "application/json",
-                },
-                body: JSON.stringify({ID,post_author,post_title,post_content,post_date,post_date_gmt,post_excerpt,post_status,comment_status,ping_status,post_password,post_name,to_ping,pinged,post_modified,post_modified_gmt,post_content_filtered,post_parent,guid,menu_order,post_type,post_mime_type,comment_count,filter,post_meta,post_thumbnail,post_permalink,taxonomies}),
-            });
-        }
-        await sendData(); 
+    const sendData = async() => {
+        await fetch("https://"+`${url}`+"/?wpwhpro_action="+`${action}`+"&wpwhpro_api_key="+`${apikey}`+"&action=create_post",{
+        // await fetch("https://webhook.site/27d6ef8d-6b16-4698-a33e-cf7b4b64b38a",{
+            method: "POST",
+            headers: {
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({ID,post_author,post_title,post_content,post_date,post_date_gmt,post_excerpt,post_status,comment_status,ping_status,post_password,post_name,to_ping,pinged,post_modified,post_modified_gmt,post_content_filtered,post_parent,guid,menu_order,post_type,post_mime_type,comment_count,filter,post_meta,post_thumbnail,post_permalink,taxonomies}),
+        });
     }
+    await sendData();
     //Response
     return NextResponse.json({message: "Data Terkirim!",post_permalink,action,apikey},{status:201}); 
 }
